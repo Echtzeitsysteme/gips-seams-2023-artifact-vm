@@ -1,0 +1,76 @@
+name: vm-provision
+
+on:
+  push:
+    branches:
+      - main
+      - 'testing/**'
+      - 'feature/**'
+      - 'hotfix/**'
+    # Run pipeline for release tags
+    tags:
+      - 'v*.*.*'
+
+env:
+  GIPS_BASE_VM_RELEASE: "v1.0.0.202301191308"
+
+jobs:
+  vagrant-provision:
+    # Running on macOS, because macOS-based GitHub-hosted action runners do support nested virtualization.
+    # https://github.com/actions/runner-images/issues/433
+    runs-on: macos-12
+    steps:
+    - uses: actions/checkout@v3
+    - name: show Vagrant version
+      run: vagrant --version
+    - name: get base VM archive
+      run: |
+        wget -q https://github.com/Echtzeitsysteme/gips-vm/releases/download/$GIPS_BASE_VM_RELEASE/gips-vm.zip
+        wget -q https://github.com/Echtzeitsysteme/gips-vm/releases/download/$GIPS_BASE_VM_RELEASE/gips-vm.z01
+        wget -q https://github.com/Echtzeitsysteme/gips-vm/releases/download/$GIPS_BASE_VM_RELEASE/gips-vm.z02
+    - name: prepare environment
+      run: bash -c ./prepare.sh
+    - name: run vagrant up
+      run: |
+        vagrant up
+        echo "=> Vagrant provisioning finished."
+    - name: export VirtualBox VM
+      run: |
+        vagrant halt
+        vboxmanage export gips-seams -o gips-seams.ova
+    - name: upload artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: gips-seams-ova
+        path: gips-seams.ova
+
+  # Create a release if running on tag
+  create-release:
+    needs: [vagrant-provision]
+    runs-on: ubuntu-20.04
+    # Only run on pushed tags (and explicitely ignore scheduled runs)
+    if: github.event_name == 'push' && contains(github.ref, 'refs/tags/') && github.event_name != 'schedule'
+    steps:
+      - name: collect artifacts
+        uses: actions/download-artifact@master
+      - name: create splitted ZIP archive
+        run: |
+          sudo apt-get install -yq zip
+          zip -r -s 1990m gips-seams-vm.zip gips-seams-ova/gips-seams.ova
+      # Due to a bug in the release action, we have to upload all artifacts step-by-step
+      # https://github.com/softprops/action-gh-release/issues/243
+      - name: release gips-seams-vm (1)
+        uses: softprops/action-gh-release@v1
+        with:
+          body: "The VM archive can not be directly added to this release because of the size limitation of 2GB per file. Please download the splitted ZIP archive and extract it manually."
+          files: gips-seams-vm.zip
+      - name: release gips-seams-vm (2)
+        uses: softprops/action-gh-release@v1
+        with:
+          body: "The VM archive can not be directly added to this release because of the size limitation of 2GB per file. Please download the splitted ZIP archive and extract it manually."
+          files: gips-seams-vm.z01
+      - name: release gips-seams-vm (3)
+        uses: softprops/action-gh-release@v1
+        with:
+          body: "The VM archive can not be directly added to this release because of the size limitation of 2GB per file. Please download the splitted ZIP archive and extract it manually."
+          files: gips-seams-vm.z02
