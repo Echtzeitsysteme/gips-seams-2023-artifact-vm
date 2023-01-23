@@ -29,7 +29,7 @@ jobs:
         wget -q https://github.com/Echtzeitsysteme/gips-vm/releases/download/$GIPS_BASE_VM_RELEASE/gips-vm.z01
         wget -q https://github.com/Echtzeitsysteme/gips-vm/releases/download/$GIPS_BASE_VM_RELEASE/gips-vm.z02
     - name: prepare environment
-      run: bash -c ./prepare.sh
+      run: chmod +x prepare.sh && bash -c ./prepare.sh
     - name: run vagrant up
       run: |
         vagrant up
