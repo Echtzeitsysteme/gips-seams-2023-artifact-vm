@@ -14,6 +14,9 @@ on:
 env:
   GIPS_BASE_VM_RELEASE: "v1.0.0.202301191308-r2"
 
+permissions:
+  contents: write
+
 jobs:
   vagrant-provision:
     # Running on macOS, because macOS-based GitHub-hosted action runners do support nested virtualization.
