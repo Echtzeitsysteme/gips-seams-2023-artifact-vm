@@ -12,7 +12,7 @@ on:
       - 'v*.*.*'
 
 env:
-  GIPS_BASE_VM_RELEASE: "v1.0.0.202301191308"
+  GIPS_BASE_VM_RELEASE: "v1.0.0.202301191308-r2"
 
 jobs:
   vagrant-provision:
