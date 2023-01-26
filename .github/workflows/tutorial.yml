@@ -1,7 +1,6 @@
 name: Build GIPS SEAMS Tutorial PDF
 on:
   push:
-    # Run pipeline for commits on branch 'main' and on some other branches
     branches:
       - main
       - 'testing/**'
@@ -14,7 +13,7 @@ env:
 
 jobs:
   collect-github-api-artifacts:
-    runs-on: [ubuntu-20.04]
+    runs-on: [ubuntu-22.04]
     steps:
       - name: Find template source
         run: |
@@ -36,10 +35,9 @@ jobs:
           name: Eisvogel.zip
           path: Eisvogel.zip
 
-  # Build Eclipse GIPS Linux user
   build-pdf:
     needs: [collect-github-api-artifacts]
-    runs-on: [ubuntu-20.04]
+    runs-on: [ubuntu-22.04]
     steps:
       - name: Start message
         run: echo "Started CI build (GIPS SEAMS template PDF)."
