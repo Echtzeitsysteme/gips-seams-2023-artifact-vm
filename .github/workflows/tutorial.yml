@@ -1,0 +1,85 @@
+name: Build GIPS SEAMS Tutorial PDF
+
+on:
+  push:
+    branches:
+      - main
+      - 'testing/**'
+      - 'feature/**'
+      - 'hotfix/**'
+    # Run pipeline for release tags
+    tags:
+      - 'v*.*.*'
+
+env:
+  # Template URL
+  TEMPLATE_SRC: "https://api.github.com/repos/Wandmalfarbe/pandoc-latex-template/releases/latest"
+
+jobs:
+  collect-github-api-artifacts:
+    runs-on: [ubuntu-22.04]
+    steps:
+      - name: Find template source
+        run: |
+          RESPONSE=$(curl -s $TEMPLATE_SRC)
+          echo "curl: $RESPONSE"
+          LATEST_SRC=$(echo "$RESPONSE" \
+            | grep "/Eisvogel.zip" \
+            | cut -d : -f 2,3 \
+            | tr -d \")
+          if [[ -z "${LATEST_SRC// }" ]]; then
+            echo "This runner propably reached it's GitHub API rate limit. Exit."
+            exit 1
+          fi
+          echo "Found URL: $LATEST_SRC"
+          wget "${LATEST_SRC// }"
+      - name: Upload template artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: Eisvogel.zip
+          path: Eisvogel.zip
+
+  build-pdf:
+    needs: [collect-github-api-artifacts]
+    runs-on: [ubuntu-22.04]
+    steps:
+      - name: Start message
+        run: echo "Started CI build (GIPS SEAMS template PDF)."
+      - name: Check out repository code
+        uses: actions/checkout@v3
+      - name: Download template
+        uses: actions/download-artifact@v3
+        with:
+          name: Eisvogel.zip
+      - name: Move template
+        run: mv Eisvogel.zip ./tutorial
+      - name: Build Docker image
+        run: |
+          cd tutorial
+          docker build -t pandoc-builder .
+      - name: Build PDF
+        run: |
+          cd tutorial
+          docker run --rm -v $PWD:/data pandoc-builder pandoc tutorial.md -o tutorial.pdf --from markdown --template eisvogel --listings --table-of-contents
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: tutorial.pdf
+          path: tutorial/tutorial.pdf
+
+  release-pdf:
+    needs: [build-pdf]
+    runs-on: ubuntu-22.04
+    # Only run on pushed tags (and explicitely ignore scheduled runs)
+    if: github.event_name == 'push' && contains(github.ref, 'refs/tags/') && github.event_name != 'schedule'
+    steps:
+      - name: Collect artifacts
+        uses: actions/download-artifact@master
+        with:
+          name: tutorial.pdf
+      - name: Release GIPS SEAMS tutorial PDF
+        uses: softprops/action-gh-release@v1
+        with:
+          files: tutorial.pdf
+          body: Please download the file 'tutorial.pdf' below to get started.
+          append_body: true
