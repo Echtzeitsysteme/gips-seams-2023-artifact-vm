@@ -4,9 +4,9 @@ on:
   push:
     branches:
       - main
-      - 'testing/**'
-      - 'feature/**'
-      - 'hotfix/**'
+      - '!testing/**'
+      - '!feature/**'
+      - '!hotfix/**'
     # Run pipeline for release tags
     tags:
       - 'v*.*.*'
