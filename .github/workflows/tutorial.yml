@@ -45,6 +45,8 @@ jobs:
         run: echo "Started CI build (GIPS SEAMS template PDF)."
       - name: Check out repository code
         uses: actions/checkout@v3
+      - name: Change directory
+        run: cd tutorial
       - name: Download template
         uses: actions/download-artifact@v3
         with:
@@ -52,7 +54,7 @@ jobs:
       - name: Build Docker image
         run: docker build -t pandoc-builder .
       - name: Build PDF
-        run: docker run --rm -v $PWD/tutorial:/data pandoc-builder pandoc tutorial.md -o tutorial.pdf --from markdown --template eisvogel --listings --table-of-contents
+        run: docker run --rm -v $PWD:/data pandoc-builder pandoc tutorial.md -o tutorial.pdf --from markdown --template eisvogel --listings --table-of-contents
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
