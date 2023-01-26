@@ -66,14 +66,15 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           body: "The VM archive can not be directly added to this release because of the size limitation of 2GB per file. Please download the splitted ZIP archive and extract it manually."
+          append_body: true
           files: gips-seams-vm.zip
       - name: release gips-seams-vm (2)
         uses: softprops/action-gh-release@v1
         with:
-          body: "The VM archive can not be directly added to this release because of the size limitation of 2GB per file. Please download the splitted ZIP archive and extract it manually."
           files: gips-seams-vm.z01
+          append_body: true
       - name: release gips-seams-vm (3)
         uses: softprops/action-gh-release@v1
         with:
-          body: "The VM archive can not be directly added to this release because of the size limitation of 2GB per file. Please download the splitted ZIP archive and extract it manually."
           files: gips-seams-vm.z02
+          append_body: true

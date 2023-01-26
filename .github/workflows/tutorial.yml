@@ -77,3 +77,5 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: tutorial.pdf
+          body: Please download the file 'tutorial.pdf' below to get started.
+          append_body: true
