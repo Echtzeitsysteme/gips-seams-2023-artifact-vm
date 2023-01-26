@@ -7,6 +7,8 @@ This repository holds the exemplar of our **SEAMS 2023 Artifact** submission tog
 [![VM Provisioning](https://github.com/Echtzeitsysteme/gips-seams-2023-artifact-vm/actions/workflows/vagrant-up.yml/badge.svg?branch=main)](https://github.com/Echtzeitsysteme/gips-seams-2023-artifact-vm/actions/workflows/vagrant-up.yml)
 [![Build GIPS SEAMS Tutorial PDF](https://github.com/Echtzeitsysteme/gips-seams-2023-artifact-vm/actions/workflows/tutorial.yml/badge.svg?branch=main)](https://github.com/Echtzeitsysteme/gips-seams-2023-artifact-vm/actions/workflows/tutorial.yml)
 
+The source code of the exemplar can be found in [this repository](https://github.com/Echtzeitsysteme/gips-seams-2023-exemplar).
+
 
 ## Setup
 
