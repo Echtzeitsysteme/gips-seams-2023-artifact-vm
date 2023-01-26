@@ -1,4 +1,5 @@
 name: Build GIPS SEAMS Tutorial PDF
+
 on:
   push:
     branches:
@@ -6,9 +7,12 @@ on:
       - 'testing/**'
       - 'feature/**'
       - 'hotfix/**'
+    # Run pipeline for release tags
+    tags:
+      - 'v*.*.*'
 
 env:
-  # template URL
+  # Template URL
   TEMPLATE_SRC: "https://api.github.com/repos/Wandmalfarbe/pandoc-latex-template/releases/latest"
 
 jobs:
