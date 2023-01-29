@@ -3,9 +3,10 @@ header-includes: |
     \usepackage[export]{adjustbox}
     \let\includegraphicsbak\includegraphics
     \renewcommand*{\includegraphics}[2][]{\includegraphicsbak[frame,#1]{#2}}
+	\usepackage[style=iso]{datetime2}
 title: "SEAMS 2023 Artifact \\newline GIPS Framework and Scenario"
 author: [Maximilian Kratz, Sebastian Ehmes, Philipp Menzel, Andy Schürr]
-date: "2023-02-01"
+date: "\\today"
 toc-own-page: true
 titlepage: true
 titlepage-logo: "img/fges.jpeg"
