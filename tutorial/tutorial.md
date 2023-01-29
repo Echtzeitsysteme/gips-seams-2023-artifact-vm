@@ -69,13 +69,14 @@ Follow these steps to open the pre-installed GIPS development environment:
 You need to complete two steps to successfully run the exemplar.
 The following notes will guide you through this process.
 
-### Building and Simulating
+### Building and Running the Simulation
 
 - Select all projects within the workspace.  
 ![](img/eclipse_07_non-emtpy-ws-selected_edited.png){ width=400px } 
 - Right click on them: Go to `eMoflon`/`Build selected projects fully`.
 	- Alternative: Click on the black eMoflon hammer symbol in the toolbar at the top.
 - All errors should now be gone.
+	- Sometimes it is required to select all projects and press `F5` to get Eclipse to reload all generated files.
 - You can now run the exemplar by going to `org.gips.examples.incrementalp2p.run`/`src`/`org.gips.examples.incrementalp2p.run`/`ConsoleApp.java`.  
 ![](img/eclipse_08_console-app_edited.png){ width=400px } 
 - Right click on this file and select `Run As`/`Java Application`.
@@ -130,6 +131,11 @@ We reccommend reading them thoroughly and solving them as recommend by the tool.
 	- If you are using Linux, you can find if virtualization is enabled via the termin:  
 	`$ egrep -c '(vmx|svm)' /proc/cpuinfo`  
 	(The return value must be `>=1`.)
+- **Error: Failed to load the NVRAM store from the file (VERR_PATH_NOT_FOUND)**: Especially in newer VirtualBox versions, we found that this error could occur. Possible solution (sorted descending regarding effort):
+	- Try to reboot your computer after installing VirtualBox.
+	- Try to re-install VirtualBox.
+	- Try to install the [Extension pack for VirtualBox](https://www.virtualbox.org/wiki/Downloads).
+	- If all the steps above could not help, try installing an older version of VirtualBox (e.g., 6.1).
 
 ### Problems/Hints for usage of the VM
 
@@ -143,3 +149,17 @@ We reccommend reading them thoroughly and solving them as recommend by the tool.
 	- Disable the checkbox: `Use system defaults`
 	- Add your preferred layout and *also remove the default one*(!).
 - **Snapshots**: You can create snapshots of your VM within the VirtualBox window. This can be useful especially if you want to change settings or try out other specifications.
+
+### Problems/Hints for Eclipse
+
+Sometimes, Eclipse and its cache produce strange errors that cannot be solved by rebuilding all projects.
+In this case, try these steps:
+
+- **Build automatically**: Make sure that `Build Automatically` is enabled in the `Project` menu (in the top navigation bar).
+- **Refresh the workspace**: Select all projects in the workspace and hit `F5`.
+- **Clean the workspace**: Select all projects in the workspace, click on `Project` (in the top navigation bar)/`Clean...`, select `Clean all projects` and click on `Clean`.
+
+
+## Contact and Help
+
+If you have any other problems running the example or the VM, feel free to open [an issue at GitHub](https://github.com/Echtzeitsysteme/gips-seams-2023-artifact-vm/issues).
