@@ -10,6 +10,8 @@ toc-own-page: true
 titlepage: true
 titlepage-logo: "img/fges.jpeg"
 logo-width: "25mm"
+color-links: true
+linkcolor: "{HTML}{4077C0}"
 ---
 
 # SEAMS 2023 Artifact - GIPS Framework and Scenario
