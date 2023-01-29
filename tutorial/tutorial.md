@@ -17,7 +17,7 @@ linkcolor: "{HTML}{4077C0}"
 
 # SEAMS 2023 Artifact - GIPS Framework and Scenario
 
-In the following, you will find all necessary steps to reproduce the results and run the **lectureStudio scenario** on your own system.
+In the following, you will find all the necessary steps to reproduce the results and run the **lectureStudio scenario** on your own system.
 For this purpose, we created a Virtual Machine (VM) to ease the installation.
 
 
@@ -27,7 +27,7 @@ For this purpose, we created a Virtual Machine (VM) to ease the installation.
 2. Install [VirtualBox](https://www.virtualbox.org/wiki/Downloads). This hypervisor is used to run the VM on your system.
 3. Start VirtualBox after the installation and press the `Import` button.  
 ![](img/01_edited.png){ width=500px }  
-4. Navigate to the extracted VM folder and open `gips.ova`. This is the VM template which you are going to import in the next step.  
+4. Navigate to the extracted VM folder and open `gips.ova`. This is the VM template that you are going to import in the next step.  
 ![](img/02_edited.png){ width=500px }  
 5. Click on `Next` to start the configuration of your import.  
 ![](img/03_edited.png){ width=500px }  
@@ -42,7 +42,7 @@ For this purpose, we created a Virtual Machine (VM) to ease the installation.
 ![](img/04.png){ width=300px }  
 7. You should now see the VM in the upper left corner and a description of the configured system. 
 ![](img/05_edited.png){ width=500px }  
-8. Select the VM and press `Start`. When asked for a password use `vagrant` to login.
+8. Select the VM and press `Start`. When asked for a password use `vagrant` to log in.
 	- The VM will show you a popup right after the first login regarding an upgrade to "Ubuntu 22.04". You can safely click on `Dont Upgrade` and continue with the next steps.
 
 
@@ -50,8 +50,8 @@ For this purpose, we created a Virtual Machine (VM) to ease the installation.
 
 Follow these steps to open the pre-installed GIPS development environment:
 
-- You will find a shortcut `GIPS Eclipse`. Double click on it to start the Eclipse installation.
-	- If this is the first time you started the Eclipse installation, it will show you a few dialogues after the initial start up:  
+- You will find a shortcut `GIPS Eclipse`. Double-click on it to start the Eclipse installation.
+	- If this is the first time you started the Eclipse installation, it will show you a few dialogues after the initial start-up:  
 	![](img/eclipse_01_hello_edited.png){ width=400px }  
 	- Click on `Next`.  
 	![](img/eclipse_02_theme_edited.png){ width=400px }  
@@ -61,7 +61,7 @@ Follow these steps to open the pre-installed GIPS development environment:
 	![](img/eclipse_04_tweak_edited.png){ width=400px }  
 	- Click on `Continue`.
 	- Eclipse will greet you with a `Welcome` tab which you can safely close.
-		- The initial start up of Eclipse will also open the web browser to show you news about Eclipse. You can safely close the window.  
+		- The initial start-up of Eclipse will also open the web browser to show you news about Eclipse. You can safely close the window.  
 	![](img/eclipse_05_get-started_edited.png){ width=400px }  
 	- Finally, you can see the workspace directory:  
 	![](img/eclipse_06_non-empty-ws_edited.png){ width=400px }  
@@ -76,13 +76,13 @@ The following notes will guide you through this process.
 
 - Select all projects within the workspace.  
 ![](img/eclipse_07_non-emtpy-ws-selected_edited.png){ width=400px } 
-- Right click on them: Go to `eMoflon`/`Build selected projects fully`.
+- Right-click on them: Go to `eMoflon`/`Build selected projects fully`.
 	- Alternative: Click on the black eMoflon hammer symbol in the toolbar at the top.
 - All errors should now be gone.
 	- Sometimes it is required to select all projects and press `F5` to get Eclipse to reload all generated files.
 - You can now run the exemplar by going to `org.gips.examples.incrementalp2p.run`/`src`/`org.gips.examples.incrementalp2p.run`/`ConsoleApp.java`.  
 ![](img/eclipse_08_console-app_edited.png){ width=400px } 
-- Right click on this file and select `Run As`/`Java Application`.
+- Right-click on this file and select `Run As`/`Java Application`.
 - The simulation now starts and shows its progress on the `Console`. The runtime of this step depends on your system and the VM setup. It should not take longer than one minute.
 - After the simulation has finished, Eclipse will automatically open the web browser `Firefox`.
 - Maximize the window for the best user experience possible.  
@@ -107,18 +107,18 @@ A more tightly integrated visualization, e.g., to manipulate the nodes and force
 
 ## Implementation
 
-The Eclipse workspace consinsts of the following projects:
+The Eclipse workspace consists of the following projects:
 
-- **LectureStudioModel**: Metamodel of the exemplar. If you are interested how the complete metamodel looks, open the file `LectureStudioModel.ecore` in `LectureStudioModel`/`model` and select all entries. If you open the tab `PlantUML` at the right side of the Eclipse view, you can inspect a graphical representation of the metamodel.
+- **LectureStudioModel**: Metamodel of the exemplar. If you are interested in how the complete metamodel looks, open the file `LectureStudioModel.ecore` in `LectureStudioModel`/`model` and select all entries. If you open the tab `PlantUML` on the right side of the Eclipse view, you can inspect a graphical representation of the metamodel.
 - **org.eclipse.examples.incrementalp2p.common**: Contains common classes to hold some data and constant definitions.
-- **org.eclipse.examples.incrementalp2p.distribution**: Contains the control flow logic of the simulation and the GIPS(L) implementation. This code mainly calls the generatedd `API` of the GIPS(L) project.
-- **org.eclipse.examples.incrementalp2p.gips.incrementaldistribution**: This is the actual GIPS(L) implementation for the incremental setup/maintainence process of the streaming network. It contains:
+- **org.eclipse.examples.incrementalp2p.distribution**: Contains the control flow logic of the simulation and the GIPS(L) implementation. This code mainly calls the generated `API` of the GIPS(L) project.
+- **org.eclipse.examples.incrementalp2p.gips.incrementaldistribution**: This is the actual GIPS(L) implementation for the incremental setup/maintenance process of the streaming network. It contains:
 	- GIPSL specification: `src`/`gipsl`/`Model.gipsl`
 	- GT rules: `src`/`gipsl`/`Rules.gt`
 	- GT patterns: `src`/`gipsl`/`Patterns.gt`
 	- GT conditions: `src`/`gipsl`/`Conditions.gt`
-- **org.eclipse.examples.incrementalp2p.repository**: This projects holds several GT rules to setup the simulation environment, i.e., to create the start space of the (non-connected) streaming network.
-- **org.eclipse.examples.incrementalp2p.run**: Entry point (runner) of the simulation. Use the class `ConsoleApp.java` to start the simulation (via it's `main` method).
+- **org.eclipse.examples.incrementalp2p.repository**: This project holds several GT rules to setup the simulation environment, i.e., to create the start space of the (non-connected) streaming network.
+- **org.eclipse.examples.incrementalp2p.run**: Entry point (runner) of the simulation. Use the class `ConsoleApp.java` to start the simulation (via its `main` method).
 - **org.eclipse.examples.incrementalp2p.visualization**: Components to generate the visualization that is shown in the web browser at the end of a run. 
 
 
@@ -127,11 +127,11 @@ The Eclipse workspace consinsts of the following projects:
 ### Problems booting the VM
 
 - If there are problems when starting the VM, please check if there are any warnings from VirtualBox.
-We reccommend reading them thoroughly and solving them as recommend by the tool.
+We recommend reading them thoroughly and solving them as recommended by the tool.
 - If you get an error stating that virtualization has been deactivated for your system, you may have to activate this feature in your BIOS/UEFI.
 	- If you are using Windows, you can find if virtualization is enabled via accessing the **Task Manager**/**Performance**.  
 	![](img/vt-d-windows_edited.png)
-	- If you are using Linux, you can find if virtualization is enabled via the termin:  
+	- If you are using Linux, you can find out if virtualization is enabled via the terminal:  
 	`$ egrep -c '(vmx|svm)' /proc/cpuinfo`  
 	(The return value must be `>=1`.)
 - **Error: Failed to load the NVRAM store from the file (VERR_PATH_NOT_FOUND)**: Especially in newer VirtualBox versions, we found that this error could occur. Possible solution (sorted descending regarding effort):
@@ -140,7 +140,7 @@ We reccommend reading them thoroughly and solving them as recommend by the tool.
 	- Try to install the [Extension pack for VirtualBox](https://www.virtualbox.org/wiki/Downloads).
 	- If all the steps above could not help, try installing an older version of VirtualBox (e.g., 6.1).
 
-### Problems/Hints for usage of the VM
+### Problems/Hints for the usage of the VM
 
 - **Adapt screen resolution**: Normally, the resolution of the virtual screen of the VM should update according to the window size you chose. However, if this does not work, you can manually change the resolution of the virtual screen.
 	- Click on the blue start symbol in the top left corner.
@@ -160,7 +160,7 @@ In this case, try these steps:
 
 - **Build automatically**: Make sure that `Build Automatically` is enabled in the `Project` menu (in the top navigation bar).
 - **Refresh the workspace**: Select all projects in the workspace and hit `F5`.
-- **Clean the workspace**: Select all projects in the workspace, click on `Project` (in the top navigation bar)/`Clean...`, select `Clean all projects` and click on `Clean`.
+- **Clean the workspace**: Select all projects in the workspace, click on `Project` (in the top navigation bar)/`Clean...`, select `Clean all projects`, and click on `Clean`.
 
 
 ## Contact and Help
